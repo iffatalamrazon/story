@@ -11,7 +11,7 @@ const port= 8000;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.he49x.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const collection = client.db("book-shop").collection("books");
+  const bookCollection = client.db("book-shop").collection("books");
   const ordersCollection = client.db("book-shop").collection("orders");
   console.log('database connected');
   
@@ -24,7 +24,7 @@ client.connect(err => {
 
   app.post('/addEvent' ,(req,res) => {
     const newEvent = req.body;
-    console.log('adding new evnt',newEvent);
+    console.log('adding new event',newEvent);
     bookCollection.insertOne(newEvent)
     .then(result => {
         console.log(result.insertedCount);
